@@ -1,0 +1,55 @@
+services:
+  inference:
+    build: .
+    image: ml-inference-starter:latest
+    container_name: inference
+    environment:
+      - MODEL_PATH=models/dummy_classifier.pt
+      - MODEL_VERSION=0.1.0
+      - HOST=0.0.0.0
+      - PORT=8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models:rw
+    networks:
+      - inference-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  prometheus:
+    image: prom/prometheus:v2.49.1
+    container_name: prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    networks:
+      - inference-net
+
+  grafana:
+    image: grafana/grafana:10.3.1
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-storage:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - inference-net
+
+networks:
+  inference-net:
+    driver: bridge
+
+volumes:
+  grafana-storage:

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inference
+  namespace: inference
+  labels:
+    app.kubernetes.io/name: inference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: inference
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: inference
+    spec:
+      containers:
+        - name: inference
+          image: ml-inference-starter:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+              name: http
+          env:
+            - name: MODEL_PATH
+              value: "models/dummy_classifier.pt"
+            - name: MODEL_VERSION
+              value: "0.1.0"
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT
+              value: "8000"
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+              memory: "4Gi"
+              cpu: "2000m"
+            requests:
+              memory: "2Gi"
+              cpu: "1000m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5

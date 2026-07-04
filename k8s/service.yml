@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: inference
+  namespace: inference
+  labels:
+    app.kubernetes.io/name: inference
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: inference
+  ports:
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP
+      name: http
