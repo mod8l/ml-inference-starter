@@ -6,6 +6,8 @@
 
 A small, containerized reference architecture for serving a PyTorch image classifier with FastAPI, Prometheus metrics, and Kubernetes manifests.
 
+This is the kind of starter I use with startups that need to get a model from a notebook to a production-grade serving stack without committing to a heavy platform too early.
+
 ## Architecture
 
 ```mermaid
@@ -66,6 +68,22 @@ With `make compose-up`:
 - Grafana UI: [http://localhost:3000](http://localhost:3000) (admin / admin)
 
 A starter dashboard for request rate, latency p99, and a GPU-utilization placeholder is mounted under `monitoring/grafana/dashboards/`.
+
+## Production Readiness
+
+Before this architecture sees real traffic, walk through [`PRODUCTION_READINESS.md`](PRODUCTION_READINESS.md). It covers probes, observability, model lifecycle, security, and cost.
+
+## From Prototype to Scale
+
+See [`docs/maturity-levels.md`](docs/maturity-levels.md) for how to evolve this starter from a notebook prototype to a production-operated service.
+
+## Cost and Efficiency
+
+A rough cost estimate for CPU vs. GPU inference is in [`docs/cost-estimate.md`](docs/cost-estimate.md). GPU instances are powerful but only cheaper than CPU at high utilization.
+
+## Load Testing
+
+Run `make load-test`, then capture the results in [`docs/load-test-report-template.md`](docs/load-test-report-template.md).
 
 ## License
 
