@@ -8,6 +8,8 @@ A small, containerized reference architecture for serving a PyTorch image classi
 
 This is the kind of starter I use with startups that need to get a model from a notebook to a production-grade serving stack without committing to a heavy platform too early.
 
+**Related work:** [`ml-security-checklist`](../ml-security-checklist) for production readiness and security checks, [`platform-scripts`](../platform-scripts) for deployment and cost tooling, [`engineering-playbook`](../engineering-playbook) for the R&D processes that keep this architecture healthy, and [`publications-and-talks`](../publications-and-talks) for essays on closing the production gap.
+
 ## Architecture
 
 ```mermaid
