@@ -1,7 +1,7 @@
 # ML Inference Starter
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![CI](https://github.com/gadsosa/ml-inference-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/gadsosa/ml-inference-starter/actions/workflows/ci.yml)
+[![CI](https://github.com/mod8l/ml-inference-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/mod8l/ml-inference-starter/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 
 A small, containerized reference architecture for serving a PyTorch image classifier with FastAPI, Prometheus metrics, and Kubernetes manifests.
